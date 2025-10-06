@@ -6,8 +6,12 @@ export const createSpace = async (req, res) => {
         const { name, description, address, price_per_day } = req.body;
         const ownerId = req.user.id;
         let imageUrl = null;
-        if(req.file){
-            const result = await cloudinary.uploader.upload(req.file.path);
+        if (req.file) {
+            const b64 = Buffer.from(req.file.buffer).toString("base64");
+            let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+            const result = await cloudinary.uploader.upload(dataURI, {
+                folder: "coworking-spaces",
+            });
             imageUrl = result.secure_url;
         }
         const newSpace = await pool.query("INSERT INTO spaces (owner_id, name, description, address, price_per_day,image_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
