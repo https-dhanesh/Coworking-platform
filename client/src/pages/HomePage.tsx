@@ -55,7 +55,7 @@ const HomePage = () => {
       <div className="relative bg-gray-600 text-white text-center py-20 px-6">
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <div className="relative z-10">
-          <h1 className="text-5xl font-extrabold mb-4">Find Your Niche, Find Your Focus.</h1>
+          <h1 className="text-5xl font-extrabold mb-4">Find Your Niche, Find Your Focus..</h1>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
             Discover unique coworking spaces tailored to your profession, from quiet writer's nooks to bustling tech hubs.
           </p>
