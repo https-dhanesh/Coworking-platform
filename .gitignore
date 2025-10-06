@@ -7,5 +7,6 @@ client/dist/
 
 .env
 server/.env
+/client/.env*
 
 server/uploads/
