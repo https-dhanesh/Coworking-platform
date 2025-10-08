@@ -7,5 +7,5 @@ export default defineConfig({
   build: {
     outDir: 'dist', // ✅ default but good to make explicit
   },
-  base: '/', // ✅ ensures assets resolve correctly on Vercel
+  base: './', // ✅ ensures assets resolve correctly on Vercel
 })
