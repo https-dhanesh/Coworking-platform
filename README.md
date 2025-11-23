@@ -1,6 +1,6 @@
 # CoWork Platform: Workspace Marketplace (Full-Stack MERN)
 
-**Live Application :** [](https://co-working-platform.vercel.app/)
+**Live Application :** [Co-working Platform](https://co-working-platform.vercel.app/)
 
 ---
 
@@ -70,7 +70,7 @@ To get a local version of this project , please follow these steps:
 git clone [https://github.com/https-dhanesh/Coworking-platform.git](https://github.com/https-dhanesh/Coworking-platform.git)
 ```
 
-### 3. Configure Environment variables
+### Configure Environment variables
 
 Create a file named .env inside the server directory. Populate it with your development secrets (these keys are sensitive and should not be shared or committed):
 
@@ -87,3 +87,21 @@ CLOUDINARY_API_SECRET=YOUR_API_SECRET
 ####  Frontend URL (for CORS)
 FRONTEND_URL=http://localhost:5173
 ```
+
+### Start the Backend API (Server)
+```
+# Navigate to the server folder
+cd server
+npm install
+npm run dev
+```
+
+### Start the Frontend Application (Client) :
+```
+# Navigate back to the client folder
+cd ../client
+npm install
+npm run dev
+```
+
+(The application will open in your browser at http://localhost:5173)
