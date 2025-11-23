@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { RegisterFormData, LoginFormData , Booking } from '../types';
+import type { RegisterFormData, LoginFormData } from '../types';
 import toast from 'react-hot-toast';
 
 const api = axios.create({

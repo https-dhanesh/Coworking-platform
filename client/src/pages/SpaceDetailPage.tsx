@@ -36,7 +36,7 @@ const SpaceDetailPage = () => {
     enabled: !!id,
   });
 
-  const { data: reviews = [], isLoading: loadingReviews, isError: reviewsError } = useQuery({
+  const { data: reviews = [], isLoading: loadingReviews} = useQuery({
     queryKey: ['reviews', id],
     queryFn: () => getReviewsBySpace(id as string),
     enabled: !!id,
