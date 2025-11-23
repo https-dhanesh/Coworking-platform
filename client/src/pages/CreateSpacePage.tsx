@@ -1,15 +1,49 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { createSpace } from "../services/api";
+import { createSpace, getAllAmenities } from "../services/api";
 import toast from "react-hot-toast";
-import type { CreateSpaceFormData } from "../types";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import type { Amenity, CreateSpaceFormData } from "../types";
+import { useEffect, useState } from "react";
 
 const CreateSpacePage = () => {
-    const { register, handleSubmit } = useForm<CreateSpaceFormData>();
+    const { register, handleSubmit , formState: { isSubmitting } } = useForm<CreateSpaceFormData>();
     const navigate = useNavigate();
 
+    const queryClient = useQueryClient();
+
+     const [selectedAmenities, setSelectedAmenities] = useState<Set<string>>(new Set());
+    const { data: allAmenities = [] } = useQuery({
+        queryKey: ['amenities'],
+        queryFn: getAllAmenities,
+    });
+
+    const createSpaceMutation = useMutation({
+        mutationFn: (data: FormData) => createSpace(data),
+        onSuccess: (newSpace) => {
+            // Invalidate the cache for ALL spaces and the USER's spaces list
+            queryClient.invalidateQueries({ queryKey: ['spaces'] });
+            queryClient.invalidateQueries({ queryKey: ['my-spaces'] });
+            
+            toast.success("Space created successfully");
+            navigate(`/spaces/${newSpace._id}`);
+        },
+        onError: (error) => {
+            console.error(error);
+            toast.error("Failed to Create Space.");
+        },
+    });
+
+    const handleAmenityChange = (amenityId: string) => {
+        setSelectedAmenities(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(amenityId)) newSet.delete(amenityId);
+            else newSet.add(amenityId);
+            return newSet;
+        });
+    };
+
     const onSubmit = async (data: any) => {
-        try {
             const formData = new FormData();
 
             formData.append('name', data.name);
@@ -19,15 +53,12 @@ const CreateSpacePage = () => {
             if (data.image && data.image[0]) {
                 formData.append('image', data.image[0]);
             }
-            
-            const newSpace = await createSpace(formData);
-            toast.success("Space created successfully");
-            navigate(`/spaces/${newSpace.id}`);
-        } catch (error) {
-            toast.error("Failed to Create Space");
-            console.error(error);
-        }
-    };
+            selectedAmenities.forEach(id => {
+                formData.append('amenities', id);
+            });
+            createSpaceMutation.mutate(formData);
+    }
+
     return (
         <div className="container mx-auto max-w-2xl px-6 py-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-6">Create a New Space</h1>
@@ -57,7 +88,29 @@ const CreateSpacePage = () => {
                         className="w-full mt-1 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                     />
                 </div>
-                <button type="submit" className="w-full py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">Create Space</button>
+                <div>
+                    <label className="block text-gray-700 font-medium mb-3">Amenities</label>
+                    <div className="grid grid-cols-2 gap-3">
+                        {allAmenities.map((amenity: Amenity) => (
+                            <label key={amenity._id} className="flex items-center space-x-3 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    className="form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500"
+                                    checked={selectedAmenities.has(amenity._id)}
+                                    onChange={() => handleAmenityChange(amenity._id)}
+                                />
+                                <span className="text-gray-700">{amenity.name}</span>
+                            </label>
+                        ))}
+                    </div>
+                </div>
+                <button 
+                    type="submit" 
+                    disabled={isSubmitting || createSpaceMutation.isPending} 
+                    className="w-full py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    {createSpaceMutation.isPending ? 'Creating...' : 'Create Space'}
+                </button>
             </form>
         </div>
     )

@@ -1,11 +1,9 @@
 import express from 'express'
-import { getAllAmenities , addAmenitiesToSpace, getAmenitiesBySpace} from '../controllers/amenities.controller.js'
-import { authMiddleware } from '../middleware/auth.middleware.js'
+import { getAllAmenities , getAmenitiesForSpace} from '../controllers/amenities.controller.js'
 
 const router = express.Router();
 
 router.get('/',getAllAmenities)
-router.post('/add-to-space',authMiddleware,addAmenitiesToSpace);
-router.get('/for-space/:spaceId',getAmenitiesBySpace);
+router.get('/for-space/:spaceId',getAmenitiesForSpace);
 
 export default router;

@@ -1,5 +1,5 @@
 import express from 'express'
-import { createSpace, deleteSpace, getAllSpaces, getMySpaces, getSpaceById, syncSpaceAmenities, updateSpace } from '../controllers/spaces.controller.js'
+import { syncSpaceAmenities, createSpace, deleteSpace, getAllSpaces, getMySpaces, getSpaceById, updateSpace } from '../controllers/spaces.controller.js'
 import { authMiddleware } from '../middleware/auth.middleware.js'
 import upload from '../middleware/upload.middleware.js';
 
@@ -9,7 +9,7 @@ router.post('/',authMiddleware,upload.single('image'),createSpace);
 router.get('/',getAllSpaces);
 router.get('/my-spaces',authMiddleware,getMySpaces);
 router.get('/:id',getSpaceById);
-router.put('/:id',authMiddleware,updateSpace)
+router.put('/:id', authMiddleware, upload.single('image'), updateSpace);
 router.delete('/:id',authMiddleware,deleteSpace)
-router.put('/:id/amenities',authMiddleware,syncSpaceAmenities);
+router.put('/:id/amenities', authMiddleware, syncSpaceAmenities);
 export default router

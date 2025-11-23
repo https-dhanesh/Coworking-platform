@@ -11,6 +11,8 @@ import ProtectedRoute from "./components/auth/ProtectedRoute"
 import MySpacesPage from "./pages/MySpacesPage"
 import EditSpacePage from "./pages/EditSpacePage"
 import NotFoundPage from './pages/NotFoundPage';
+import MyBookingsPage from './pages/MyBookingsPage';
+import OwnerDashboard from './pages/OwnerDashboard';
 
 const AppLayout=()=>{
   return(
@@ -41,6 +43,8 @@ const router = createBrowserRouter([
           {path:'/create-space',element:<CreateSpacePage/>},
           {path:'/my-spaces',element:<MySpacesPage/>},
           { path: '/spaces/:id/edit', element: <EditSpacePage /> },
+          { path: '/my-bookings', element: <MyBookingsPage /> },
+          { path: '/owner-dashboard', element: <OwnerDashboard /> },
         ]
       }
     ],
