@@ -4,24 +4,24 @@
 
 ---
 
-## 🚀 Project Overview
+## Project Overview
 
 The CoWork Platform is a professional, full-stack application designed to connect space owners with users seeking niche, flexible workspaces.
 
 ### Key Features Implemented:
 
-* ✅ **Complete Authentication:** Secure user registration/login via JWT and `bcrypt` password hashing.
-* 🔒 **Role-Based Access Control:** Middleware enforces security, ensuring only authenticated owners can create, update, or delete spaces.
-* 💼 **Owner Management:** Full CRUD (Create, Read, Update, Delete) functionality for managing listings, including image updates.
-* 💰 **Transactional Booking System (Phase 2):** Implemented a full booking flow that includes date conflict checking and a no-self-booking business rule.
-* 💳 **Real-World Payment Flow:** Integrated **Razorpay** (in test mode) to handle payment order creation and secure signature verification on the backend.
-* 🔍 **Advanced Discovery:** Text-based search and amenity filtering (e.g., Wi-Fi, Parking) across all listings.
-* ⚡ **Performance & UX:** Frontend refactored with **TanStack Query** for client-side caching, eliminating slow loading spinners and unnecessary data re-fetching.
-* 📸 **Cloud Media Handling:** Integrated **Cloudinary** for scalable image storage and serving.
+*  **Complete Authentication:** Secure user registration/login via JWT and `bcrypt` password hashing.
+*  **Role-Based Access Control:** Middleware enforces security, ensuring only authenticated owners can create, update, or delete spaces.
+*  **Owner Management:** Full CRUD (Create, Read, Update, Delete) functionality for managing listings, including image updates.
+*  **Transactional Booking System (Phase 2):** Implemented a full booking flow that includes date conflict checking and a no-self-booking business rule.
+*  **Real-World Payment Flow:** Integrated **Razorpay** (in test mode) to handle payment order creation and secure signature verification on the backend.
+*  **Advanced Discovery:** Text-based search and amenity filtering (e.g., Wi-Fi, Parking) across all listings.
+*  **Performance & UX:** Frontend refactored with **TanStack Query** for client-side caching, eliminating slow loading spinners and unnecessary data re-fetching.
+*  **Cloud Media Handling:** Integrated **Cloudinary** for scalable image storage and serving.
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 This project is structured as a Monorepo (Client and Server in one repository) and utilizes a multi-cloud deployment strategy.
 
@@ -55,7 +55,7 @@ This project is structured as a Monorepo (Client and Server in one repository) a
 
 ---
 
-## ⚙️ Local Development Setup
+##  Local Development Setup
 
 To get a local version of this project , please follow these steps:
 
