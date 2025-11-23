@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getAllSpaces, getAllAmenities } from '../services/api';
@@ -35,7 +35,6 @@ const HomePage = () => {
 
   const spaces = data?.spaces || [];
   const totalPages = data?.totalPages || 1;
-  const isLoading = loadingSpaces || loadingAmenities;
 
   const handleAmenityChange = (amenityId: string) => {
     setSelectedAmenities(prev => {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getOwnerBookings } from '../services/api';
 import { AuthContext } from '../context/AuthContext';

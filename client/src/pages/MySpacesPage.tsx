@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { getMySpaces, deleteSpace } from '../services/api';
 import type { Space } from '../types';
@@ -13,7 +12,6 @@ const MySpacesPage = () => {
     data: spaces = [], 
     isLoading, 
     isError,
-    refetch
   } = useQuery({
     queryKey: ['my-spaces'], 
     queryFn: getMySpaces,

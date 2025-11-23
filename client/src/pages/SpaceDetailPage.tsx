@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getSpaceById, getAmenitiesForSpace, getReviewsBySpace, submitReview } from '../services/api'; // Import new API functions
-import type { Space, Amenity, Review } from '../types';
+import { getSpaceById, getAmenitiesForSpace, getReviewsBySpace, submitReview } from '../services/api';
+import type { Review } from '../types';
 import Spinner from '../components/Spinner';
 import BookingForm from '../components/BookingForm';
 import { AuthContext } from '../context/AuthContext';

@@ -4,7 +4,7 @@ import { createSpace, getAllAmenities } from "../services/api";
 import toast from "react-hot-toast";
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { Amenity, CreateSpaceFormData } from "../types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const CreateSpacePage = () => {
     const { register, handleSubmit , formState: { isSubmitting } } = useForm<CreateSpaceFormData>();
@@ -21,7 +21,6 @@ const CreateSpacePage = () => {
     const createSpaceMutation = useMutation({
         mutationFn: (data: FormData) => createSpace(data),
         onSuccess: (newSpace) => {
-            // Invalidate the cache for ALL spaces and the USER's spaces list
             queryClient.invalidateQueries({ queryKey: ['spaces'] });
             queryClient.invalidateQueries({ queryKey: ['my-spaces'] });
             
