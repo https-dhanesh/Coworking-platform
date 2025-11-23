@@ -67,7 +67,7 @@ To get a local version of this project , please follow these steps:
 # Clone the repository
 
 ```
-git clone [https://github.com/https-dhanesh/Coworking-platform.git](https://github.com/https-dhanesh/Coworking-platform.git)
+git clone https://github.com/https-dhanesh/Coworking-platform.git
 ```
 
 ### Configure Environment variables
