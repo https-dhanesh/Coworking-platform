@@ -3,7 +3,7 @@ import type { RegisterFormData, LoginFormData } from '../types';
 import toast from 'react-hot-toast';
 
 const api = axios.create({
-    baseURL:'http://localhost:5000/api',
+    baseURL:'https://coworking-platform-oc4d.onrender.com/api',
 });
 
 api.interceptors.response.use(
