@@ -3,7 +3,7 @@ import type { RegisterFormData, LoginFormData } from '../types';
 import toast from 'react-hot-toast';
 
 const api = axios.create({
-    baseURL:'https://coworking-platform-oc4d.onrender.com/api',
+    baseURL:'http://localhost:5000/api',
 });
 
 api.interceptors.response.use(
@@ -11,7 +11,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('token');
-      toast.error("🔒 Session Expired. Please log in again.", { duration: 5000 });
+      toast.error("Session Expired. Please log in again.", { duration: 5000 });
       setTimeout(() => {
           window.location.href = '/login';
       }, 500); 
