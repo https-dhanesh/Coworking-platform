@@ -3,7 +3,7 @@ import type { RegisterFormData, LoginFormData } from '../types';
 import toast from 'react-hot-toast';
 
 const api = axios.create({
-    baseURL:'http://localhost:5000/api',
+    baseURL: `${import.meta.env.API_BASE_URL}/api`,
 });
 
 api.interceptors.response.use(
