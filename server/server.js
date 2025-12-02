@@ -17,6 +17,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(express.json());
+
+app.get('/status', (req, res) => {
+    res.status(200).json({ status: 'ok', time: new Date() });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/spaces', spaceRoutes);
 app.use('/api/amenities', amenitiesRoutes);
