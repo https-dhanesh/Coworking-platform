@@ -9,7 +9,7 @@ exports.up = pgm => {
             username varchar(50) not null unique,
             email varchar(100) not null unique,
             password_hash varchar(255) not null,
-            role varchar(20) not null default 'member',
+            role varchar(20) not null default 'default',
             created_at timestamp with time zone default current_timestamp
         );
 

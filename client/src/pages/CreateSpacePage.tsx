@@ -2,19 +2,15 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { createSpace, getAllAmenities } from "../services/api";
 import toast from "react-hot-toast";
-import { AuthContext } from '../context/AuthContext';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { Amenity, CreateSpaceFormData } from "../types";
-import { useState , useContext } from "react";
-import { jwtDecode } from 'jwt-decode';
-import type { User } from "../context/AuthContext";
+import { useState } from "react";
 
 const CreateSpacePage = () => {
     const { register, handleSubmit , formState: { isSubmitting } } = useForm<CreateSpaceFormData>();
     const navigate = useNavigate();
 
     const queryClient = useQueryClient();
-    const authContext = useContext(AuthContext);
 
      const [selectedAmenities, setSelectedAmenities] = useState<Set<string>>(new Set());
     const { data: allAmenities = [] } = useQuery({
@@ -25,13 +21,6 @@ const CreateSpacePage = () => {
     const createSpaceMutation = useMutation({
         mutationFn: (data: FormData) => createSpace(data),
         onSuccess: (newSpace) => {
-            if (newSpace.token && authContext) {
-                localStorage.setItem('token', newSpace.token);
-
-                const decodedUser = jwtDecode<User>(newSpace.token);
-                authContext.setUser(decodedUser); 
-            }
-
             queryClient.invalidateQueries({ queryKey: ['spaces'] });
             queryClient.invalidateQueries({ queryKey: ['my-spaces'] });
             
