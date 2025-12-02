@@ -20,16 +20,33 @@ export const createSpace = async (req, res) => {
     const imageUrl = await uploadToCloudinary(req.file);
 
     const newSpace = await Space.create({
-        owner_id, 
-        name,
-        description,
-        address,
-        price_per_day: parseFloat(price_per_day),
-        image_url: imageUrl,
-        amenities: amenities || [] 
+      owner_id,
+      name,
+      description,
+      address,
+      price_per_day: parseFloat(price_per_day),
+      image_url: imageUrl,
+      amenities: amenities || []
     });
 
-    res.status(201).json(newSpace);
+    const user = await User.findById(owner_id);
+    let token = null;
+
+    if (user && user.role === 'member') {
+      user.role = 'owner';
+      await user.save();
+      token = jwt.sign(
+        { id: user._id.toString(), role: 'owner' },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+      );
+    }
+    return res.status(201).json({
+      newSpace,
+      token,
+      ownerId: owner_id
+    });
+
   } catch (err) {
     console.error(err);
     if (err.name === 'ValidationError') {
@@ -42,7 +59,7 @@ export const createSpace = async (req, res) => {
 export const getAllSpaces = async (req, res) => {
   try {
     const { amenities, page = 1, limit = 9, search } = req.query;
-    
+
     let query = {};
 
     if (search) {
@@ -82,8 +99,8 @@ export const getAllSpaces = async (req, res) => {
 
 export const getSpaceById = async (req, res) => {
   try {
-    const space = await Space.findById(req.params.id).populate('amenities', 'name'); 
-    
+    const space = await Space.findById(req.params.id).populate('amenities', 'name');
+
     if (!space) {
       return res.status(404).json({ error: "Space not found" });
     }
@@ -129,16 +146,16 @@ export const updateSpace = async (req, res) => {
     }
 
     const updatedSpace = await Space.findByIdAndUpdate(
-        id, 
-        { 
-          name, 
-          description, 
-          address, 
-          price_per_day: parseFloat(price_per_day), 
-          image_url: imageUrl,
-          amenities: amenities 
-        },
-        { new: true, runValidators: true } 
+      id,
+      {
+        name,
+        description,
+        address,
+        price_per_day: parseFloat(price_per_day),
+        image_url: imageUrl,
+        amenities: amenities
+      },
+      { new: true, runValidators: true }
     );
 
     res.json(updatedSpace);
@@ -164,7 +181,7 @@ export const deleteSpace = async (req, res) => {
 
     await Review.deleteMany({ space_id: id });
 
-    await Space.findByIdAndDelete(id); 
+    await Space.findByIdAndDelete(id);
 
     res.json({ message: "Space deleted successfully" });
   } catch (err) {
